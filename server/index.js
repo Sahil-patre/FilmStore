@@ -11,11 +11,16 @@ app.use(express.json())
 app.use(cors());
 
 const connectDB = async ()=>{
-    const conn = await mongoose.connect(process.env.MONGODB_URL)
+    try {
+        const conn = await mongoose.connect(process.env.MONGODB_URL)
 
     if (conn){
         console.log('\n 📈 MongoDB Connected ')
+    } 
+    } catch (error) {
+        console.log(`\n ❌ MongoDB connection: ${error.message}` )
     }
+   
 }
 
 app.get('/',(req,res)=>{
