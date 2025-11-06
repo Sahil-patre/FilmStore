@@ -10,7 +10,7 @@ function Home() {
   const [error, setError] = useState("");
 
   const loadMovies = async () => {
-    const response = await axios.get("http://localhost:8080/movies");
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/movies`);
     setMovies(response.data.data);
   };
 
@@ -23,7 +23,7 @@ function Home() {
 
   try {
     const response = await axios.get(
-      `http://localhost:8080/movies/search?q=${search}`
+      `${import.meta.env.VITE_API_URL}/movies/search?q=${search}`
     );
     toast.dismiss();
     setMovies(response.data.data);
