@@ -3,6 +3,8 @@ import { use, useEffect, useState } from "react";
 import { Search as SearchIcon } from "lucide-react";
 import toast, { Toaster } from 'react-hot-toast';
 import MovieCard from "./../components/MovieCard.jsx";
+import img404 from "../assets/404.png";
+import { API_URL } from "./constants.js";
 
 function Home() {
   const [movies, setMovies] = useState([]);
@@ -10,7 +12,7 @@ function Home() {
   const [error, setError] = useState("");
 
   const loadMovies = async () => {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/movies`);
+    const response = await axios.get(`${API_URL}/movies`);
     setMovies(response.data.data);
   };
 
@@ -23,7 +25,7 @@ function Home() {
 
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/movies/search?q=${search}`
+      `${API_URL}/movies/search?q=${search}`
     );
     toast.dismiss();
     setMovies(response.data.data);
@@ -58,7 +60,10 @@ function Home() {
   
 </div>
 
-{error ? <div className="text-red-500 text-center mt-4">{error}</div> : null}
+{error ? <div className="text-red-500 text-center mt-4">
+  <img src={img404} alt="No results found" className="mx-auto mb-4 w-48 h-48"/>
+  {error}
+  </div> : null}
 
       <div className="flex flex-wrap gap-6 justify-around p-6">
       {movies.map((movieObj) => {
