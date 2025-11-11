@@ -1,6 +1,7 @@
 import axios from "axios";
 import { use, useEffect, useState } from "react";
 import { Search as SearchIcon } from "lucide-react";
+import { Link } from "react-router";
 import toast, { Toaster } from 'react-hot-toast';
 import MovieCard from "./../components/MovieCard.jsx";
 import img404 from "../assets/404.png";
@@ -70,10 +71,15 @@ function Home() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-yellow-300 mb-4 flex items-center justify-center gap-3">
-            <span className="text-4xl">🎬</span> FilmStore
-          </h1>
-          <p className="text-gray-400 text-lg">Discover your next favorite movie</p>
+          <div className="flex flex-col items-center gap-3">
+            <h1 className="text-4xl md:text-5xl font-bold text-yellow-300 mb-0 flex items-center justify-center gap-3">
+              <span className="text-4xl">🎬</span> FilmStore
+            </h1>
+            <p className="text-gray-400 text-lg">Discover your next favorite movie</p>
+            <Link to="/new" className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg transition">
+              ➕ Add Movie
+            </Link>
+          </div>
         </div>
 
         {/* Search Bar */}

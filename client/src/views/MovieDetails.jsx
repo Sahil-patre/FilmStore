@@ -178,7 +178,9 @@ function MovieDetails() {
                     <p className="text-white">{movieDetail.year || "—"}</p>
                   </div>
                 </div>
-
+                      <Link to={`/movies/edit/${movieDetail._id}`} className="inline-block px-5 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-lg">
+                        ✏️ Edit Movie
+                      </Link>
                 {/* ✅ Only Back to Home (buttons removed) */}
                 <div className="mt-6 flex flex-wrap gap-3">
                   <Link
