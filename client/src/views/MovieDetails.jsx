@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
+import Ratings from "../components/Ratings.jsx";
 import img404 from "../assets/404.png";
 import { API_URL } from "./constants.js";
 
@@ -20,6 +21,11 @@ function MovieDetails() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const changeRating = async (newRating) => {
+    setMovieDetail({ ...movieDetail, rating: newRating });
+    await axios.patch(`${API_URL}/movies/${id}/rating`, { rating: newRating });
+  }
 
   const loadMovieDetails = async () => {
     try {
@@ -50,7 +56,6 @@ function MovieDetails() {
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="bg-gradient-to-r from-black/60 via-black/40 to-black/60 border border-gray-800 rounded-2xl p-6 md:p-10 shadow-xl">
-          
           {loading ? (
             <div className="flex items-center justify-center h-72">
               <div className="text-center text-gray-400">
@@ -75,7 +80,6 @@ function MovieDetails() {
             </div>
           ) : (
             <div className="flex flex-col md:flex-row gap-8 items-start">
-              
               {/* Poster */}
               <div className="md:w-1/3 w-full">
                 <div className="rounded-lg overflow-hidden shadow-2xl border border-gray-700">
@@ -114,27 +118,21 @@ function MovieDetails() {
 
                     <p className="text-sm text-gray-400 mt-1">
                       {movieDetail.category || "Unknown"} •{" "}
-                      {movieDetail.year || "—"} •{" "}
-                      {movieDetail.language || "—"}
+                      {movieDetail.year || "—"} • {movieDetail.language || "—"}
                     </p>
                   </div>
 
-                  {/* Rating Stars */}
+                  {/* Rating Stars (use Ratings component) */}
                   <div className="text-right">
-                    <div className="flex items-center justify-end gap-1 text-amber-400 text-xl">
-                      {Array.from({ length: ratingValue }).map((_, index) => (
-                        <span key={index}>★</span>
-                      ))}
-                      {Array.from({ length: 5 - ratingValue }).map(
-                        (_, index) => (
-                          <span key={index} className="text-gray-600">
-                            ★
-                          </span>
-                        )
-                      )}
+                    <div className="flex items-center justify-end text-amber-400 text-xl">
+                      <Ratings
+                        rating={movieDetail.rating}
+                        onClick={(newRating) => {
+                            changeRating(newRating);
+                        }}
+                      />
                     </div>
 
-                    {/* ✅ Correct rating (out of 5 now) */}
                     <div className="mt-1 text-sm text-gray-400">
                       Rating:{" "}
                       <span className="text-yellow-400 font-semibold">
@@ -162,30 +160,22 @@ function MovieDetails() {
                 <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-gray-300">
                   <div className="space-y-2">
                     <p className="text-gray-400">Director</p>
-                    <p className="text-white">
-                      {movieDetail.director || "—"}
-                    </p>
+                    <p className="text-white">{movieDetail.director || "—"}</p>
                   </div>
 
                   <div className="space-y-2">
                     <p className="text-gray-400">Language</p>
-                    <p className="text-white">
-                      {movieDetail.language || "—"}
-                    </p>
+                    <p className="text-white">{movieDetail.language || "—"}</p>
                   </div>
 
                   <div className="space-y-2">
                     <p className="text-gray-400">Category</p>
-                    <p className="text-white">
-                      {movieDetail.category || "—"}
-                    </p>
+                    <p className="text-white">{movieDetail.category || "—"}</p>
                   </div>
 
                   <div className="space-y-2">
                     <p className="text-gray-400">Year</p>
-                    <p className="text-white">
-                      {movieDetail.year || "—"}
-                    </p>
+                    <p className="text-white">{movieDetail.year || "—"}</p>
                   </div>
                 </div>
 

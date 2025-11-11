@@ -1,8 +1,9 @@
 import { Link } from "react-router";
-import { Trash } from "lucide-react";
+import { Rat, Trash } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { API_URL } from "../views/constants.js";
+import Rating from "./Ratings.jsx";
 
 
 function MovieCard({ _id, title, images, category, year, rating ,loadMovies }) {
@@ -43,14 +44,7 @@ function MovieCard({ _id, title, images, category, year, rating ,loadMovies }) {
 
         {/* Rating Stars */}
         <div className="flex items-center mt-2 text-amber-400 text-xl">
-          {Array.from({ length: rating }).map((_, index) => (
-            <span key={index}>★</span>
-          ))}
-          {Array.from({ length: 5 - rating }).map((_, index) => (
-            <span key={index} className="text-gray-600">
-              ★
-            </span>
-          ))}
+          <Rating rating={rating} />
         </div>
       </div>
     </Link>
